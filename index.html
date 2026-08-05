@@ -66,9 +66,25 @@
 
   .stage {
     position: relative;
-    width: min(94vw, 30rem);
+    width: min(97vw, 30rem);
     perspective: 2000px;
     transition: height 1s cubic-bezier(0.22, 0.61, 0.36, 1);
+  }
+
+  @media (max-width: 640px) {
+    .stage {
+      width: min(98vw, 30rem);
+    }
+    .eyebrow { font-size: 0.8rem; }
+    .names { font-size: clamp(2.6rem, 10.5vw, 3.4rem); }
+    .tagline { font-size: 1.15rem; }
+    .date-line { font-size: clamp(2.1rem, 8.5vw, 2.4rem); }
+    .location { font-size: 1.05rem; }
+    .note { font-size: 0.95rem; }
+    .btn { font-size: 0.88rem; }
+    .cover-names { font-size: clamp(2.1rem, 8.5vw, 2.5rem); }
+    .cover-sub { font-size: 0.78rem; }
+    .seal-hint { font-size: 0.72rem; }
   }
 
   /* ---------- Card ---------- */
