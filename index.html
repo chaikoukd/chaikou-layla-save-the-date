@@ -1,4 +1,5 @@
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
@@ -424,27 +425,6 @@
     window.addEventListener('resize', layoutStage);
     window.addEventListener('orientationchange', layoutStage);
     layoutStage();
-
-    (function debugReadout() {
-      var box = document.createElement('div');
-      box.style.cssText = 'position:fixed;left:0;bottom:0;right:0;z-index:999;background:rgba(0,0,0,0.75);color:#0f0;font:11px/1.4 monospace;padding:6px 8px;white-space:pre-wrap;';
-      document.body.appendChild(box);
-      function update() {
-        var sRect = stage.getBoundingClientRect();
-        var cs = getComputedStyle(stage);
-        box.textContent =
-          'innerWidth=' + window.innerWidth +
-          ' innerHeight=' + window.innerHeight +
-          ' dpr=' + window.devicePixelRatio +
-          '\nstage.rectWidth=' + sRect.width.toFixed(1) +
-          ' stage.cssWidth=' + cs.width +
-          ' bodyPadding=' + getComputedStyle(document.body).padding +
-          '\nmq640=' + window.matchMedia('(max-width:640px)').matches +
-          ' buildTag=v6-debug';
-      }
-      window.addEventListener('resize', update);
-      update();
-    })();
 
     var icsLines = [
       'BEGIN:VCALENDAR',
