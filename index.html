@@ -352,7 +352,7 @@
         <p class="eyebrow" style="margin-bottom:0.5rem;">Reserve the Date</p>
         <div class="btn-row">
           <a class="btn" id="google-cal-btn" href="#" target="_blank" rel="noopener">Google Calendar</a>
-          <a class="btn secondary" id="apple-cal-btn" href="#" target="_blank" rel="noopener">Apple Calendar</a>
+          <a class="btn secondary" id="apple-cal-btn" href="#">Apple Calendar</a>
         </div>
       </div>
       <div class="action-group">
@@ -398,7 +398,9 @@
     ].join('\r\n');
 
     var appleBtn = document.getElementById('apple-cal-btn');
-    appleBtn.href = 'data:text/calendar;charset=utf-8,' + encodeURIComponent(icsLines);
+    var icsBlob = new Blob([icsLines], { type: 'text/calendar;charset=utf-8' });
+    appleBtn.href = URL.createObjectURL(icsBlob);
+    appleBtn.setAttribute('download', 'Chaikou-and-Layla-Wedding.ics');
 
     var googleParams = new URLSearchParams({
       action: 'TEMPLATE',
