@@ -48,7 +48,7 @@
     padding: 0;
     background: var(--paper);
     color: var(--ink);
-    min-height: 100%;
+    min-height: 100dvh;
     overflow-x: hidden;
   }
 
@@ -56,19 +56,19 @@
     font-family: 'EB Garamond', Georgia, serif;
     display: flex;
     justify-content: center;
-    align-items: flex-start;
-    padding: 6vh 1.25rem 8vh;
+    align-items: center;
+    padding: 3vh 1rem;
     line-height: 1.5;
   }
 
   .stage {
     position: relative;
-    width: 100%;
-    max-width: 30rem;
+    width: min(92vw, 30rem);
+    perspective: 2000px;
   }
 
   .stage:not(.opened) {
-    aspect-ratio: 960 / 1179;
+    height: min(88dvh, 40rem);
   }
 
   /* ---------- Card ---------- */
@@ -81,6 +81,19 @@
     outline-offset: -6px;
     padding: 3.2rem 2rem 2.6rem;
     text-align: center;
+    transition: transform 0.9s cubic-bezier(0.22, 0.61, 0.36, 1) 0.35s;
+  }
+
+  .stage:not(.opened) .card {
+    transform: translateY(6%);
+  }
+
+  .stage.opened .card {
+    transform: translateY(0);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .card { transition: none; }
   }
 
   .eyebrow {
@@ -244,7 +257,11 @@
     padding: 2rem;
     z-index: 5;
     overflow: hidden;
-    transition: opacity 0.9s ease, transform 0.9s ease;
+    transform-origin: top center;
+    transform-style: preserve-3d;
+    backface-visibility: hidden;
+    box-shadow: 0 1px 0 rgba(60, 64, 41, 0.15);
+    transition: opacity 0.85s ease 0.1s, transform 1s cubic-bezier(0.6, 0.05, 0.25, 1);
   }
 
   .cover-frame {
@@ -309,12 +326,12 @@
 
   .stage.opened .cover {
     opacity: 0;
-    transform: scale(1.04);
+    transform: rotateX(-115deg);
     pointer-events: none;
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .cover, .seal { transition: none; }
+    .cover, .seal, .card { transition: none; }
   }
 
   #confetti-canvas {
