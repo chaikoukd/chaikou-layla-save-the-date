@@ -66,27 +66,18 @@
 
   .stage {
     position: relative;
-    width: min(92vw, 30rem);
+    width: min(94vw, 30rem);
     perspective: 2000px;
-  }
-
-  .stage:not(.opened) {
-    height: min(85dvh, 34rem);
-  }
-
-  @media (max-width: 640px) {
-    .stage {
-      width: min(94vw, 30rem);
-    }
-    .stage:not(.opened) {
-      height: min(93dvh, 50rem);
-    }
+    transition: height 1s cubic-bezier(0.22, 0.61, 0.36, 1);
   }
 
   /* ---------- Card ---------- */
 
   .card {
-    position: relative;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
     background: var(--paper-deep);
     border: 1px solid var(--olive);
     outline: 1px solid var(--gold);
@@ -281,7 +272,7 @@
     inset: 0;
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
     pointer-events: none;
   }
 
@@ -359,7 +350,7 @@
 </style>
 
 <div class="stage" id="stage">
-  <div class="card">
+  <div class="card" id="card">
     <span class="corner tl"></span><span class="corner tr"></span>
     <span class="corner bl"></span><span class="corner br"></span>
 
@@ -409,6 +400,20 @@
 
 <script>
   (function () {
+    var stage = document.getElementById('stage');
+    var card = document.getElementById('card');
+
+    function layoutStage() {
+      if (stage.classList.contains('opened')) {
+        stage.style.height = card.offsetHeight + 'px';
+      } else {
+        stage.style.height = Math.min(window.innerHeight * 0.94, 900) + 'px';
+      }
+    }
+    window.addEventListener('resize', layoutStage);
+    window.addEventListener('orientationchange', layoutStage);
+    layoutStage();
+
     var icsLines = [
       'BEGIN:VCALENDAR',
       'VERSION:2.0',
@@ -505,7 +510,8 @@
     }
 
     document.getElementById('seal-btn').addEventListener('click', function () {
-      document.getElementById('stage').classList.add('opened');
+      stage.classList.add('opened');
+      layoutStage();
       if (!reduceMotion) fireConfetti();
     });
   })();
